@@ -59,7 +59,8 @@ const gameBoard = ( () => {
 
     }
 
-    return {generateBoard};
+    generateBoard()
+
 })();
 
 
@@ -78,6 +79,10 @@ const gameController = ( () =>{
 
     function getPlayer() {
         return currentPlayer;
+    }
+
+    function checkWin() {
+
     }
 
 
@@ -106,5 +111,3 @@ const playerFactory = (name) => {
 
     return {getPoints, getName, incrementPoints};
 };
-
-gameBoard.generateBoard();
