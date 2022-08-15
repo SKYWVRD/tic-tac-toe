@@ -7,10 +7,27 @@ const board = document.getElementById("board");
 const gameBoard = ( () => {
     let boardArray = [0, 0, 0, 0, 0, 0];
 
+    function _updateArray(cell){
+
+    }
+
+    function _updateCell(cell) {
+
+        if(gameController.getPlayer() === 1)
+            cell.innerHTML = 'x';
+        else
+            cell.innerHTML = 'o';
+
+
+        gameController.switchPlayer();
+    };
+
 
     const generateBoard = () => {
         let boardTable = document.createElement('table');
         let boardBody = document.createElement('tbody');
+
+
 
         for(let i = 0; i < 3; i++){
             let tableRow = document.createElement('tr');
@@ -18,9 +35,17 @@ const gameBoard = ( () => {
             let cell2 = document.createElement('td');
             let cell3 = document.createElement('td');
 
-            cell1.innerHTML = "x";
-            cell2.innerHTML = "o";
-            cell3.innerHTML = "x";
+            cell1.addEventListener('click', function (){
+                _updateCell(cell1);
+            })
+
+            cell2.addEventListener('click', function (){
+                _updateCell(cell2);
+            })
+
+            cell3.addEventListener('click', function (){
+                _updateCell(cell3);
+            })
 
             tableRow.appendChild(cell1);
             tableRow.appendChild(cell2);
@@ -37,7 +62,37 @@ const gameBoard = ( () => {
     return {generateBoard};
 })();
 
-//Object for displaying things using module because only 1
+
+
+//Object for controlling the game
+const gameController = ( () =>{
+    
+    let currentPlayer = 1;
+
+    function switchPlayer() {
+        if (currentPlayer === 1)
+            currentPlayer = 2;
+        else
+            currentPlayer = 1;
+    }
+
+    function getPlayer() {
+        return currentPlayer;
+    }
+
+
+    return {
+        switchPlayer,
+        getPlayer
+    }
+
+
+})();
+
+//Module for controlling screen, not board related
+const displayController = ( () => {
+    
+})
 
 //Object for player using factory because multiple
 const playerFactory = (name) => {
