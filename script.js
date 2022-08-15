@@ -15,6 +15,18 @@ const gameBoard = ( () => {
         for(let i = 0; i < 3; i++){
             let tableRow = document.createElement('tr');
             let cell1 = document.createElement('td');
+            let cell2 = document.createElement('td');
+            let cell3 = document.createElement('td');
+
+            cell1.innerHTML = "x";
+            cell2.innerHTML = "o";
+            cell3.innerHTML = "x";
+
+            tableRow.appendChild(cell1);
+            tableRow.appendChild(cell2);
+            tableRow.appendChild(cell3);
+
+            boardBody.appendChild(tableRow);
         }
 
         boardTable.appendChild(boardBody);
@@ -39,3 +51,5 @@ const playerFactory = (name) => {
 
     return {getPoints, getName, incrementPoints};
 };
+
+gameBoard.generateBoard();
