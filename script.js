@@ -5,22 +5,31 @@ const board = document.getElementById("board");
 
 //Object for gameboard using module because only 1
 const gameBoard = ( () => {
-    let boardArray = [0, 0, 0, 0, 0, 0];
+    let boardArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
-    function _updateArray(cell){
-
+    function _updateArray(cell, player){
+        boardArray[cell.getAttribute('column')][cell.getAttribute('row')] = player;
     }
 
     function _updateCell(cell) {
+        if(cell.innerHTML == ''){
+            if(gameController.getPlayer() === 1)
+                cell.innerHTML = 'x';
+            else
+                cell.innerHTML = 'o';
 
-        if(gameController.getPlayer() === 1)
-            cell.innerHTML = 'x';
-        else
-            cell.innerHTML = 'o';
 
-
-        gameController.switchPlayer();
+            _updateArray(cell, gameController.getPlayer())
+            gameController.switchPlayer();
+            gameController.checkWin();
+        }
+        
     };
+
+
+    function getArray(){
+        return boardArray;
+    }
 
 
     const generateBoard = () => {
@@ -34,6 +43,14 @@ const gameBoard = ( () => {
             let cell1 = document.createElement('td');
             let cell2 = document.createElement('td');
             let cell3 = document.createElement('td');
+
+
+            cell1.setAttribute("column", 0);
+            cell1.setAttribute("row", i)
+            cell2.setAttribute('column', 1);
+            cell2.setAttribute('row', i)
+            cell3.setAttribute('column', 2);
+            cell3.setAttribute('row', i)
 
             cell1.addEventListener('click', function (){
                 _updateCell(cell1);
@@ -59,7 +76,11 @@ const gameBoard = ( () => {
 
     }
 
-    generateBoard()
+    generateBoard();
+
+    return{
+        getArray
+    };
 
 })();
 
@@ -82,13 +103,15 @@ const gameController = ( () =>{
     }
 
     function checkWin() {
-
+        currentBoard = gameBoard.getArray();
+        console.log(currentBoard);
     }
 
 
     return {
         switchPlayer,
-        getPlayer
+        getPlayer,
+        checkWin
     }
 
 
